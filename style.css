@@ -1,0 +1,504 @@
+/* ===========
+BODY
+=========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+
+    margin:0;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#ffeef5;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+
+/* ===========
+CARD
+=========== */
+.container{
+
+    width:92%;
+    max-width:450px;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+
+    transition:
+
+    transform 1.2s ease,
+
+    width 1.2s ease,
+
+    height 1.2s ease,
+
+    border-radius 1.2s ease,
+
+    box-shadow 1.2s ease,
+
+    background 1.2s ease,
+
+    padding 1.2s ease;
+
+    transform:scale(1);
+
+}
+
+/* ===========
+TITLE
+=========== */
+h1{
+
+    color:#ff4f8a;
+
+    margin-bottom:10px;
+
+}
+.subtitle{
+
+    color:#666;
+
+    margin-bottom:30px;
+
+}
+
+/* ===========
+HEART
+=========== */
+.heart{
+
+    width:150px;
+
+    height:150px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#ffd7e8;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:60px;
+
+    border:5px dashed hotpink;
+
+    cursor:pointer;
+
+    touch-action:none;
+
+    transition:0.3s ease;
+
+    user-select:none;
+
+    -webkit-user-select:none;
+
+}
+
+/*=========================
+        STATUS
+=========================*/
+
+#status{
+
+    margin-top:20px;
+
+    min-height:60px;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    color:#555;
+
+    line-height:1.5;
+
+    transition:0.3s;
+
+}
+
+/*=========================
+        READING
+=========================*/
+
+#reading{
+
+    margin-top:20px;
+
+    font-size:72px;
+
+    font-weight:bold;
+
+    color:#ff4f8a;
+
+    text-shadow:0 0 20px rgba(255,80,140,.4);
+
+    transition:0.3s;
+
+}
+
+
+/* ===========
+BUTTONS
+=========== */
+
+/* ===========
+ANIMATIONS
+=========== */
+/*=========================
+      HEART ANIMATION
+=========================*/
+
+@keyframes heartbeat{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    25%{
+
+        transform:scale(1.08);
+
+    }
+
+    50%{
+
+        transform:scale(0.97);
+
+    }
+
+    75%{
+
+        transform:scale(1.12);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+.scanning{
+
+    animation:heartbeat .8s infinite;
+
+    box-shadow:0 0 30px hotpink;
+
+}
+/*=========================
+      RESULT POP
+=========================*/
+
+@keyframes resultPop{
+
+    0%{
+
+        transform:scale(.5);
+
+        opacity:0;
+
+    }
+
+    70%{
+
+        transform:scale(1.15);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+.result-show{
+
+    animation:resultPop .7s ease;
+
+}
+/*=========================
+    FULLSCREEN RESULT
+=========================*/
+
+.fullscreen{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100vw;
+
+    max-width: none;
+    
+    height:100vh;
+
+    max-height: none;
+
+    margin:0;
+
+    border-radius:0;
+
+    padding:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ffe4ec,
+        #ffd6e8,
+        #fff0f6
+    );
+
+    z-index:9999;
+
+}
+.fullscreen h1{
+
+    display:none;
+
+}
+
+.fullscreen .subtitle{
+
+    display:none;
+
+}
+
+.fullscreen .heart{
+
+    display:none;
+
+}
+
+.fullscreen #status{
+
+    display:none;
+
+}
+
+.fullscreen #reading{
+
+    display:none;
+
+}
+
+.fullscreen .result-screen{
+
+    display:flex;
+
+}
+/*=========================
+        GROW
+=========================*/
+
+.grow{
+
+    transform:scale(1.05);
+
+}
+/*=========================
+      RESULT SCREEN
+=========================*/
+
+.result-screen{
+
+    display:none;
+
+    width:100%;
+
+    height:100%;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+.analyzer-display{
+
+    background:none;
+
+    box-shadow:none;
+
+    backdrop-filter:none;
+
+    width:100%;
+
+    max-width:900px;
+
+    padding:40px;
+
+}
+#resultTitle{
+
+    font-size:clamp(26px,5vw,48px);
+
+    color:#c2185b;
+
+    margin-bottom:30px;
+
+}
+
+#resultNumber{
+
+    font-size:clamp(90px,20vw,170px);
+
+    font-weight:900;
+
+    color:#d63384;
+
+    line-height:1;
+
+    margin:25px 0;
+
+    text-shadow:0 4px 18px rgba(255,255,255,.5);
+
+}
+#resultMessage{
+
+    font-size:clamp(18px,3vw,30px);
+
+    color:#8b3a62;
+
+    min-height:40px;
+
+    max-width:700px;
+
+    margin:auto;
+
+    line-height:1.5;
+
+}
+/*=========================================
+        ERROR FLASH
+=========================================*/
+
+@keyframes errorFlash{
+
+    0%   { background:linear-gradient(135deg,#ffe4ec,#ffd6e8,#fff0f6); }
+
+    10%  { background:#ff4d6d; }
+
+    20%  { background:linear-gradient(135deg,#ffe4ec,#ffd6e8,#fff0f6); }
+
+    30%  { background:#ff1744; }
+
+    40%  { background:linear-gradient(135deg,#ffe4ec,#ffd6e8,#fff0f6); }
+
+    50%  { background:#ff1744; }
+
+    60%  { background:linear-gradient(135deg,#ffe4ec,#ffd6e8,#fff0f6); }
+
+    70%  { background:#ff1744; }
+
+    80%  { background:linear-gradient(135deg,#ffe4ec,#ffd6e8,#fff0f6); }
+
+    90%  { background:#ff1744; }
+
+    100% { background:linear-gradient(135deg,#ffe4ec,#ffd6e8,#fff0f6); }
+
+}
+
+/* Slow flashing */
+.flash-slow{
+
+    animation:errorFlash 1.2s infinite;
+
+}
+
+/* Medium flashing */
+.flash-medium{
+
+    animation:errorFlash .7s infinite;
+
+}
+
+/* Crazy flashing */
+.flash-fast{
+
+    animation:errorFlash .35s infinite;
+
+}
+/*=========================================
+        PANIC SHAKE
+=========================================*/
+
+@keyframes panicShake{
+
+    0%{transform:translateX(0);}
+    10%{transform:translateX(-6px);}
+    20%{transform:translateX(6px);}
+    30%{transform:translateX(-8px);}
+    40%{transform:translateX(8px);}
+    50%{transform:translateX(-5px);}
+    60%{transform:translateX(5px);}
+    70%{transform:translateX(-3px);}
+    80%{transform:translateX(3px);}
+    100%{transform:translateX(0);}
+
+}
+
+.panic{
+
+    animation:panicShake .8s;
+
+}
+@keyframes analyzerFade{
+
+    from{
+
+        opacity:0;
+        transform:scale(.92);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:scale(1);
+
+    }
+
+}
+
+.fullscreen .analyzer-display{
+
+    animation:analyzerFade .8s ease;
+
+}
