@@ -15,6 +15,12 @@ const resultNumber = document.getElementById("resultNumber");
 
 const resultMessage = document.getElementById("resultMessage");
 
+const crazyReelScreen = document.getElementById("crazyReelScreen");
+
+const crazyReel = document.getElementById("crazyReel");
+
+const analyzerDisplay = document.querySelector(".analyzer-display");
+
 /*=========================
         VARIABLES
 =========================*/
@@ -215,242 +221,217 @@ function updateCalculation() {
 
     finishCalculation();
   }
-  function finishCalculation() {
-    status.innerText = "✨ Finalizing results...";
+}
+function finishCalculation() {
+  status.innerText = "✨ Finalizing results...";
 
-    setTimeout(expandScreen, 1000);
-  }
-  function expandScreen() {
-    container.classList.add("grow");
+  setTimeout(expandScreen, 1000);
+}
+function expandScreen() {
+  container.classList.add("grow");
 
-    setTimeout(function () {
-      container.classList.add("fullscreen");
+  setTimeout(function () {
+    container.classList.add("fullscreen");
 
-      showFinalResult();
-    }, 1200);
-  }
-  function showFinalResult() {
-    loveResult = Math.floor(Math.random() * 9) + 91;
+    showFinalResult();
+  }, 1200);
+}
+function showFinalResult() {
+  loveResult = Math.floor(Math.random() * 9) + 91;
 
-    resultTitle.innerText = "❤️ LOVE ANALYZER ❤️";
+  resultTitle.innerText = "❤️ LOVE ANALYZER ❤️";
 
-    resultNumber.innerText = "--";
+  resultNumber.innerText = "--";
 
-    resultMessage.innerText = "Initializing Love Engine...";
+  resultMessage.innerText = "Initializing Love Engine...";
 
-    setTimeout(function () {
-      startAnalyzerSequence();
-    }, 1000);
-  }
-  function startAnalyzerSequence() {
-    const messages = [
-      "Initializing Love Engine... ❤️",
+  setTimeout(function () {
+    startAnalyzerSequence();
+  }, 1000);
+}
+function startAnalyzerSequence() {
+  const messages = [
+    "Initializing Love Engine... ❤️",
 
-      "Connecting to Cupid... 💘",
+    "Connecting to Cupid... 💘",
 
-      "Scanning Romantic Memories... 📖",
+    "Scanning Romantic Memories... 📖",
 
-      "Reading Heartbeats... 💓",
+    "Reading Heartbeats... 💓",
 
-      "Analyzing Butterflies... 🦋",
-    ];
+    "Analyzing Butterflies... 🦋",
+  ];
 
-    let index = 0;
+  let index = 0;
 
-    function nextMessage() {
-      if (index >= messages.length) {
-        startSlotMachine();
+  function nextMessage() {
+    if (index >= messages.length) {
+      startSlotMachine();
 
-        return;
-      }
-
-      resultMessage.innerText = messages[index];
-
-      index++;
-
-      setTimeout(nextMessage, 700);
-    }
-
-    nextMessage();
-  }
-  function startSlotMachine() {
-    const randomNumbers = [42, 81, 19, 73, 91, 38, 54, 95, 62, 89];
-
-    let i = 0;
-
-    function spin() {
-      if (i < randomNumbers.length) {
-        resultNumber.innerText = randomNumbers[i] + "%";
-
-        i++;
-
-        setTimeout(spin, 60);
-      } else {
-        slowDown();
-      }
-    }
-
-    spin();
-  }
-  function slowDown() {
-    const ending = [91, 93, 95, 97, 99, 97, loveResult];
-
-    const delays = [
-      150,
-
-      200,
-
-      250,
-
-      320,
-
-      420,
-
-      550,
-
-      700,
-    ];
-
-    let i = 0;
-
-    function finish() {
-      resultNumber.innerText = ending[i] + "%";
-
-      if (i >= ending.length - 1) {
-        setTimeout(revealResult, 800);
-
-        return;
-      }
-
-      setTimeout(function () {
-        i++;
-
-        finish();
-      }, delays[i]);
-    }
-
-    finish();
-  }
-
-  function revealResult() {
-    resultTitle.innerHTML = "💕 LOVE DETECTED! 💕";
-
-    resultMessage.innerText = "😊 That's suspiciously adorable.";
-
-    // Wait before starting verification
-    setTimeout(startVerification, 2500);
-  }
-  function startVerification() {
-    resultTitle.innerHTML = "🔍 VERIFYING RESULT";
-
-    animateVerification();
-  }
-  let verificationDots;
-
-  function animateVerification() {
-    const frames = [
-      "Verifying result",
-
-      "Verifying result.",
-
-      "Verifying result..",
-
-      "Verifying result...",
-    ];
-
-    let index = 0;
-
-    verificationDots = setInterval(function () {
-      resultMessage.innerText = frames[index];
-
-      index++;
-
-      if (index >= frames.length) {
-        index = 0;
-      }
-    }, 300);
-
-    // Stop after 3 seconds
-    setTimeout(function () {
-      clearInterval(verificationDots);
-
-      verificationError();
-    }, 3000);
-  }
-  function verificationError() {
-    resultTitle.innerHTML = panicTitles[0];
-
-    resultMessage.innerHTML = panicMessages[0];
-
-    container.classList.add("flash-slow");
-
-    resultNumber.style.display = "none";
-
-    document.querySelector(".analyzer-display").classList.add("panic");
-
-    if (navigator.vibrate) {
-      startVibration();
-    }
-
-    setTimeout(function () {
-      startPanicSequence();
-    }, 1200);
-  }
-  //=========================================
-  // START PHONE VIBRATION
-  //=========================================
-
-  function startVibration() {
-    if (!navigator.vibrate) {
       return;
     }
 
-    vibrationLoop = setInterval(function () {
-      navigator.vibrate(250);
-    }, 350);
+    resultMessage.innerText = messages[index];
+
+    index++;
+
+    setTimeout(nextMessage, 700);
   }
-  //=========================================
-  // STOP PHONE VIBRATION
-  //=========================================
 
-  function stopVibration() {
-    clearInterval(vibrationLoop);
+  nextMessage();
+}
+function startSlotMachine() {
+  const randomNumbers = [42, 81, 19, 73, 91, 38, 54, 95, 62, 89];
 
-    navigator.vibrate(0);
-  }
-  function startPanicSequence() {
-    let index = 1;
+  let i = 0;
 
-    function nextMessage() {
-      resultTitle.innerHTML = panicTitles[index];
+  function spin() {
+    if (i < randomNumbers.length) {
+      resultNumber.innerText = randomNumbers[i] + "%";
 
-      resultMessage.innerHTML = panicMessages[index];
+      i++;
 
-      // Change flash speed
-      container.classList.remove("flash-slow", "flash-medium", "flash-fast");
-
-      if (index <= 1) {
-        container.classList.add("flash-slow");
-      } else if (index <= 3) {
-        container.classList.add("flash-medium");
-      } else if (index <= 4) {
-        container.classList.add("flash-fast");
-      } else {
-        // SYSTEM CONFUSION
-        // Don't add any flash class.
-      }
-
-      index++;
-
-      if (index >= panicMessages.length) {
-        setTimeout(startCrazyReel, 1500);
-
-        return;
-      }
-
-      setTimeout(nextMessage, 1900);
+      setTimeout(spin, 60);
+    } else {
+      slowDown();
     }
-    // Change flash speed based on stage
+  }
+
+  spin();
+}
+function slowDown() {
+  const ending = [91, 93, 95, 97, 99, 97, loveResult];
+
+  const delays = [
+    150,
+
+    200,
+
+    250,
+
+    320,
+
+    420,
+
+    550,
+
+    700,
+  ];
+
+  let i = 0;
+
+  function finish() {
+    resultNumber.innerText = ending[i] + "%";
+
+    if (i >= ending.length - 1) {
+      setTimeout(revealResult, 800);
+
+      return;
+    }
+
+    setTimeout(function () {
+      i++;
+
+      finish();
+    }, delays[i]);
+  }
+
+  finish();
+}
+
+function revealResult() {
+  resultTitle.innerHTML = "💕 LOVE DETECTED! 💕";
+
+  resultMessage.innerText = "😊 That's suspiciously adorable.";
+
+  // Wait before starting verification
+  setTimeout(startVerification, 2500);
+}
+function startVerification() {
+  resultTitle.innerHTML = "🔍 VERIFYING RESULT";
+
+  animateVerification();
+}
+let verificationDots;
+
+function animateVerification() {
+  const frames = [
+    "Verifying result",
+
+    "Verifying result.",
+
+    "Verifying result..",
+
+    "Verifying result...",
+  ];
+
+  let index = 0;
+
+  verificationDots = setInterval(function () {
+    resultMessage.innerText = frames[index];
+
+    index++;
+
+    if (index >= frames.length) {
+      index = 0;
+    }
+  }, 300);
+
+  // Stop after 3 seconds
+  setTimeout(function () {
+    clearInterval(verificationDots);
+
+    verificationError();
+  }, 3000);
+}
+function verificationError() {
+  resultTitle.innerHTML = panicTitles[0];
+
+  resultMessage.innerHTML = panicMessages[0];
+
+  container.classList.add("flash-slow");
+
+  resultNumber.style.display = "none";
+
+  analyzerDisplay.classList.add("panic");
+
+  if (navigator.vibrate) {
+    startVibration();
+  }
+
+  setTimeout(function () {
+    startPanicSequence();
+  }, 1200);
+}
+//=========================================
+// START PHONE VIBRATION
+//=========================================
+
+function startVibration() {
+  if (!navigator.vibrate) {
+    return;
+  }
+
+  vibrationLoop = setInterval(function () {
+    navigator.vibrate(250);
+  }, 350);
+}
+//=========================================
+// STOP PHONE VIBRATION
+//=========================================
+
+function stopVibration() {
+  clearInterval(vibrationLoop);
+
+  navigator.vibrate(0);
+}
+function startPanicSequence() {
+  let index = 1;
+
+  function nextMessage() {
+    resultTitle.innerHTML = panicTitles[index];
+
+    resultMessage.innerHTML = panicMessages[index];
 
     container.classList.remove("flash-slow", "flash-medium", "flash-fast");
 
@@ -460,11 +441,22 @@ function updateCalculation() {
       container.classList.add("flash-medium");
     } else if (index <= 4) {
       container.classList.add("flash-fast");
-    } else {
-      // SYSTEM CONFUSION
-      // No flashing anymore
     }
 
-    nextMessage();
+    index++;
+
+    if (index >= panicMessages.length) {
+      setTimeout(function () {
+        stopVibration();
+
+        startCrazyReel();
+      }, 1500);
+
+      return;
+    }
+
+    setTimeout(nextMessage, 1900);
   }
+
+  nextMessage();
 }

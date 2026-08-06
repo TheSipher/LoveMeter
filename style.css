@@ -502,3 +502,68 @@ ANIMATIONS
     animation:analyzerFade .8s ease;
 
 }
+/*=========================
+      CRAZY REEL
+=========================*/
+
+.crazy-reel-screen{
+
+    display:none;
+
+    position:absolute;
+
+    inset:0;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#0d0d0d;
+
+}
+
+.fullscreen .crazy-reel-screen.active{
+
+    display:flex;
+
+}
+.slot-window{
+
+    width:min(85vw,450px);
+
+    height:220px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    background:#151515;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:
+
+        0 0 60px rgba(255,255,255,.08);
+
+}
+#crazyReel{
+
+    font-size:clamp(90px,18vw,170px);
+
+    font-weight:900;
+
+    color:white;
+
+    font-family:monospace;
+
+    text-shadow:
+
+        0 0 15px hotpink,
+
+        0 0 35px hotpink;
+
+}
