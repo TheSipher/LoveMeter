@@ -562,9 +562,114 @@ function spinReel() {
   step();
 }
 function reelStopped() {
-  centerNumber.classList.add("winner");
-
   if (navigator.vibrate) {
-    navigator.vibrate([80, 60, 220]);
+    navigator.vibrate([80, 60, 250]);
   }
+
+  setTimeout(() => {
+    overloadSequence();
+  }, 1200);
+}
+function overloadSequence(){
+
+  centerNumber.textContent = "999";
+  topNumber.textContent = "999";
+  bottomNumber.textContent = "999";
+
+
+  setTimeout(()=>{
+
+    centerNumber.textContent = "999";
+    resultMessage.innerText =
+    "⚠️ Something is wrong...";
+
+  },1200);
+
+
+
+  setTimeout(()=>{
+
+    centerNumber.textContent = "????";
+    resultMessage.innerText =
+    "Impossible value detected 😨";
+
+
+    if(navigator.vibrate){
+      navigator.vibrate([
+        100,
+        80,
+        150,
+        80,
+        250
+      ]);
+    }
+
+
+    crazyReelScreen.classList.add("overload");
+
+
+  },2500);
+
+
+
+  setTimeout(()=>{
+
+    revealInfinity();
+
+  },5000);
+
+}
+function revealInfinity(){
+
+  centerNumber.textContent="∞";
+
+  topNumber.textContent="";
+  bottomNumber.textContent="";
+
+
+  resultTitle.innerHTML =
+  "💕 LOVE DETECTED 💕";
+
+
+  resultMessage.innerHTML =
+  `
+  The analyzer gave up... 😭<br>
+  Love exceeded human limits ❤️
+  `;
+
+
+  crazyReelScreen.classList.add("infinity-reveal");
+
+
+  createConfetti();
+
+
+}
+function createConfetti(){
+
+for(let i=0;i<80;i++){
+
+ const confetti=document.createElement("div");
+
+ confetti.className="confetti";
+
+ confetti.style.left=
+ Math.random()*100+"vw";
+
+
+ confetti.style.animationDelay=
+ Math.random()*2+"s";
+
+
+ document.body.appendChild(confetti);
+
+
+ setTimeout(()=>{
+
+ confetti.remove();
+
+ },4000);
+
+}
+
 }
