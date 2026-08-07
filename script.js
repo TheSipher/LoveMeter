@@ -17,10 +17,11 @@ const resultMessage = document.getElementById("resultMessage");
 
 const crazyReelScreen = document.getElementById("crazyReelScreen");
 
-const crazyReel = document.getElementById("crazyReel");
+const crazyReelTrack = document.getElementById("crazyReelTrack");
 
 const analyzerDisplay = document.querySelector(".analyzer-display");
 
+const resultTitle = document.getElementById("resultTitle");
 /*=========================
         VARIABLES
 =========================*/
@@ -46,6 +47,14 @@ let displayValue = 0;
 let slotTimer;
 
 let vibrationLoop;
+
+let reelAnimation;
+
+let currentPosition = 0;
+
+const reelHeight = 110;
+
+let lastCenterIndex = -1;
 
 const releaseMessages = [
   "😒 Science takes time, honey.",
@@ -459,4 +468,65 @@ function startPanicSequence() {
   }
 
   nextMessage();
+}
+function startCrazyReel() {
+  resultScreen.style.display = "none";
+
+  crazyReelScreen.classList.add("active");
+
+  buildReel();
+
+  spinReel();
+}
+function buildReel() {
+  crazyReelTrack.innerHTML = "";
+
+  const totalEntries = 120;
+
+  for (let i = 0; i < totalEntries; i++) {
+    const div = document.createElement("div");
+
+    div.className = "reel-number";
+
+    div.innerText = Math.floor(Math.random() * 100) + "%";
+
+    crazyReelTrack.appendChild(div);
+  }
+
+  const infinity = document.createElement("div");
+
+  infinity.className = "reel-number";
+
+  infinity.innerText = "∞";
+
+  crazyReelTrack.appendChild(infinity);
+}
+function updateActiveNumber(position) {
+  currentPosition = position;
+
+  const numbers = crazyReelTrack.children;
+
+  const centerIndex = Math.round(position / reelHeight);
+
+  if (centerIndex === lastCenterIndex) return;
+
+  lastCenterIndex = centerIndex;
+
+  for (const number of numbers) {
+    number.classList.remove("active");
+  }
+
+  if (numbers[centerIndex]) {
+    numbers[centerIndex].classList.add("active");
+  }
+}
+
+function reelStopped() {
+  updateActiveNumber(currentPosition);
+
+  if (navigator.vibrate) {
+    navigator.vibrate([40, 50, 80]);
+  }
+
+  console.log("Infinity reached.");
 }
