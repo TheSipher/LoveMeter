@@ -17,7 +17,11 @@ const resultMessage = document.getElementById("resultMessage");
 
 const crazyReelScreen = document.getElementById("crazyReelScreen");
 
-const crazyReelTrack = document.getElementById("crazyReelTrack");
+const topNumber = document.getElementById("topNumber");
+
+const centerNumber = document.getElementById("centerNumber");
+
+const bottomNumber = document.getElementById("bottomNumber");
 
 const analyzerDisplay = document.querySelector(".analyzer-display");
 
@@ -55,6 +59,18 @@ let currentPosition = 0;
 const reelHeight = 110;
 
 let lastCenterIndex = -1;
+
+const reelValues = [];
+
+let reelIndex = 0;
+
+let displayedValue = 0;
+
+let increment = 6;
+
+let reelDelay = 18;
+
+let reelRunning = false;
 
 const releaseMessages = [
   "😒 Science takes time, honey.",
@@ -476,57 +492,79 @@ function startCrazyReel() {
 
   buildReel();
 
+  reelIndex = 0;
+
+  reelDelay = 18;
+
   spinReel();
 }
 function buildReel() {
-  crazyReelTrack.innerHTML = "";
+  reelValues.length = 0;
 
-  const totalEntries = 120;
+  displayedValue = 120;
 
-  for (let i = 0; i < totalEntries; i++) {
-    const div = document.createElement("div");
-
-    div.className = "reel-number";
-
-    div.innerText = Math.floor(Math.random() * 100) + "%";
-
-    crazyReelTrack.appendChild(div);
-  }
-
-  const infinity = document.createElement("div");
-
-  infinity.className = "reel-number";
-
-  infinity.innerText = "∞";
-
-  crazyReelTrack.appendChild(infinity);
+  increment = 7;
 }
-function updateActiveNumber(position) {
-  currentPosition = position;
+function updateReel() {
+  topNumber.textContent = Math.max(displayedValue - increment, 0);
 
-  const numbers = crazyReelTrack.children;
+  centerNumber.textContent = displayedValue;
 
-  const centerIndex = Math.round(position / reelHeight);
-
-  if (centerIndex === lastCenterIndex) return;
-
-  lastCenterIndex = centerIndex;
-
-  for (const number of numbers) {
-    number.classList.remove("active");
-  }
-
-  if (numbers[centerIndex]) {
-    numbers[centerIndex].classList.add("active");
-  }
+  bottomNumber.textContent = Math.min(displayedValue + increment, 999);
 }
+function spinReel() {
+  displayedValue = 0;
+  increment = 6;
+  reelDelay = 18;
 
+  function step() {
+    displayedValue += increment;
+
+    if (displayedValue > 999) {
+      displayedValue = 999;
+    }
+
+    updateReel(displayedValue);
+
+    // progressively larger jumps
+    if (displayedValue > 150) increment = 8;
+    if (displayedValue > 300) increment = 11;
+    if (displayedValue > 500) increment = 16;
+    if (displayedValue > 700) increment = 22;
+    if (displayedValue > 850) increment = 15;
+    if (displayedValue > 930) increment = 8;
+    if (displayedValue > 970) increment = 4;
+    if (displayedValue > 990) increment = 1;
+
+    // gradually slow
+    if (displayedValue > 500) reelDelay += 0.5;
+    if (displayedValue > 700) reelDelay += 1;
+    if (displayedValue > 850) reelDelay += 2;
+    if (displayedValue > 930) reelDelay += 4;
+
+    if (displayedValue >= 999) {
+      setTimeout(() => {
+        centerNumber.innerHTML = "∞";
+
+        topNumber.innerHTML = "999";
+
+        bottomNumber.innerHTML = "∞";
+
+        reelStopped();
+      }, 500);
+
+      return;
+    }
+
+    setTimeout(step, reelDelay);
+  }
+
+  step();
+}
 function reelStopped() {
-  updateActiveNumber(currentPosition);
+  centerNumber.classList.add("winner");
 
   if (navigator.vibrate) {
-    navigator.vibrate([40, 50, 80]);
+    navigator.vibrate([80, 60, 220]);
   }
-
-  console.log("Infinity reached.");
 }
