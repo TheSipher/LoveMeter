@@ -734,6 +734,10 @@ function revealInfinity() {
     `;
   }, 55000);
 
+  setTimeout(() => {
+    stopRecording();
+  }, 60000);
+
   setTimeout(createConfetti, 600);
 
   requestAnimationFrame(() => {
@@ -801,6 +805,20 @@ startRecordingSetup.addEventListener("click", async () => {
 
     permissionStatus.innerText = "Camera and microphone ready! ❤️";
 
+    recordedChunks = [];
+
+    mediaRecorder = new MediaRecorder(cameraStream);
+
+    mediaRecorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        recordedChunks.push(event.data);
+      }
+    };
+
+    mediaRecorder.start();
+
+    console.log("🎥 Recording started.");
+
     console.log("Camera stream:", cameraStream);
 
     // For now, just hide the setup screen.
@@ -865,6 +883,3 @@ function stopRecording() {
     cameraStream = null;
   };
 }
-setTimeout(() => {
-  stopRecording();
-}, 15000);
