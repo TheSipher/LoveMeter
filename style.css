@@ -855,19 +855,35 @@ ANIMATIONS
 
 .recording-setup {
   position: fixed;
-  inset: 0;
+
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
   z-index: 100000;
+
   background: linear-gradient(135deg, #ffeef5, #ffd6e7);
 
   display: flex;
+
   justify-content: center;
   align-items: center;
 
   padding: 20px;
+
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  min-height: 100%;
 }
 
 .recording-card {
   width: min(90vw, 420px);
+  max-width: 420px;
 
   padding: 35px 25px;
 
@@ -880,6 +896,8 @@ ANIMATIONS
   box-shadow:
     0 20px 60px rgba(255, 20, 147, 0.2),
     0 5px 20px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
 }
 
 .recording-icon {
