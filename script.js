@@ -824,8 +824,20 @@ async function startRecording() {
       audio: true,
     });
 
-    console.log("Camera + microphone ready.");
+    recordedChunks = [];
+
+    mediaRecorder = new MediaRecorder(cameraStream);
+
+    mediaRecorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        recordedChunks.push(event.data);
+      }
+    };
+
+    mediaRecorder.start();
+
+    console.log("🎥 Recording started.");
   } catch (error) {
-    console.error("Camera/microphone permission failed:", error);
+    console.error("Recording failed:", error);
   }
 }
