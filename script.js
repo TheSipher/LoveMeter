@@ -543,15 +543,15 @@ function spinReel() {
     if (displayedValue > 930) reelDelay += 4;
 
     if (displayedValue >= 999) {
+      displayedValue = 999;
+
+      centerNumber.textContent = "999";
+      topNumber.textContent = "998";
+      bottomNumber.textContent = "999";
+
       setTimeout(() => {
-        centerNumber.innerHTML = "∞";
-
-        topNumber.innerHTML = "999";
-
-        bottomNumber.innerHTML = "∞";
-
         reelStopped();
-      }, 500);
+      }, 400);
 
       return;
     }
@@ -562,114 +562,175 @@ function spinReel() {
   step();
 }
 function reelStopped() {
-  if (navigator.vibrate) {
-    navigator.vibrate([80, 60, 250]);
-  }
-
-  setTimeout(() => {
-    overloadSequence();
-  }, 1200);
+  repeat999(4);
 }
-function overloadSequence(){
+function repeat999(times) {
+  let count = 0;
 
-  centerNumber.textContent = "999";
-  topNumber.textContent = "999";
-  bottomNumber.textContent = "999";
+  function cycle() {
+    centerNumber.classList.add("max-reading");
 
-
-  setTimeout(()=>{
-
-    centerNumber.textContent = "999";
-    resultMessage.innerText =
-    "⚠️ Something is wrong...";
-
-  },1200);
-
-
-
-  setTimeout(()=>{
-
-    centerNumber.textContent = "????";
-    resultMessage.innerText =
-    "Impossible value detected 😨";
-
-
-    if(navigator.vibrate){
-      navigator.vibrate([
-        100,
-        80,
-        150,
-        80,
-        250
-      ]);
+    if (navigator.vibrate) {
+      navigator.vibrate([60, 40, 120]);
     }
 
+    setTimeout(() => {
+      centerNumber.classList.remove("max-reading");
+
+      // make the reel roll one step
+      topNumber.textContent = "999";
+      centerNumber.textContent = "999";
+      bottomNumber.textContent = "999";
+
+      setTimeout(() => {
+        topNumber.textContent = "999";
+        centerNumber.textContent = "999";
+        bottomNumber.textContent = "999";
+
+        count++;
+
+        if (count < times) {
+          setTimeout(cycle, 150);
+        } else {
+          showQuestionMarks();
+        }
+      }, 120);
+    }, 300);
+  }
+
+  cycle();
+}
+function showQuestionMarks() {
+  centerNumber.classList.remove("max-reading");
+
+  setTimeout(() => {
+    resultMessage.innerText = "⚠️ Something is wrong...";
+  }, 1200);
+
+  setTimeout(() => {
+    centerNumber.textContent = "????";
+    resultMessage.innerText = "Impossible value detected 😨";
+
+    centerNumber.classList.add("overload-glow");
+
+    if (navigator.vibrate) {
+      navigator.vibrate([100, 80, 150, 80, 250]);
+    }
 
     crazyReelScreen.classList.add("overload");
+  }, 2500);
 
-
-  },2500);
-
-
-
-  setTimeout(()=>{
-
-    revealInfinity();
-
-  },5000);
-
+  setTimeout(() => {
+    startInfinityTransition();
+  }, 5000);
 }
-function revealInfinity(){
+function revealInfinity() {
+  resultNumber.style.opacity = "0";
+  resultNumber.style.transform = "scale(.4)";
 
-  centerNumber.textContent="∞";
+  resultNumber.innerHTML = "∞";
+  resultNumber.className = "final-infinity";
+  resultNumber.style.display = "block";
 
-  topNumber.textContent="";
-  bottomNumber.textContent="";
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        wow!! This is a medical miracle! 😱😱 You love me too much 
+    `;
+  }, 5000);
 
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        I love you too babe 😉
+    `;
+  }, 10000);
 
-  resultTitle.innerHTML =
-  "💕 LOVE DETECTED 💕";
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        And hence proven you love me more than 100% 🙂‍↕️🙂‍↕️
+    `;
+  }, 13000);
 
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        don't deny that every time you see me your heart beats faster and you feel butterflies in your stomach 😘
+    `;
+  }, 17000);
 
-  resultMessage.innerHTML =
-  `
-  The analyzer gave up... 😭<br>
-  Love exceeded human limits ❤️
-  `;
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        maybe not that dramatic 😜 but you still feel something right?
+    `;
+  }, 22000);
 
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        Don't you????
+    `;
+  }, 29000);
 
-  crazyReelScreen.classList.add("infinity-reveal");
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        yeah you do 😁🙂‍↕️🙂‍↕️
+    `;
+  }, 31000);
 
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        I love you mate really 
+    `;
+  }, 34000);
 
-  createConfetti();
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        last message bye 😜😉
+    `;
+  }, 38000);
 
+  setTimeout(createConfetti, 600);
 
+  requestAnimationFrame(() => {
+    resultNumber.classList.add("infinity-final");
+  });
 }
-function createConfetti(){
+function createConfetti() {
+  for (let i = 0; i < 80; i++) {
+    const confetti = document.createElement("div");
 
-for(let i=0;i<80;i++){
+    confetti.className = "confetti";
 
- const confetti=document.createElement("div");
+    confetti.style.left = Math.random() * 100 + "vw";
 
- confetti.className="confetti";
+    confetti.style.animationDelay = Math.random() * 2 + "s";
 
- confetti.style.left=
- Math.random()*100+"vw";
+    document.body.appendChild(confetti);
 
-
- confetti.style.animationDelay=
- Math.random()*2+"s";
-
-
- document.body.appendChild(confetti);
-
-
- setTimeout(()=>{
-
- confetti.remove();
-
- },4000);
-
+    setTimeout(() => {
+      confetti.remove();
+    }, 4000);
+  }
 }
+function startInfinityTransition() {
+  const flash = document.getElementById("transitionFlash");
 
+  flash.classList.add("white-out");
+
+  setTimeout(() => {
+    // Hide slot machine
+    crazyReelScreen.classList.remove("active");
+
+    // Show analyzer again
+    resultScreen.style.display = "flex";
+
+    // Empty screen
+    resultTitle.innerHTML = "";
+    resultNumber.innerHTML = "";
+    resultMessage.innerHTML = "";
+
+    flash.classList.remove("white-out");
+
+    // Small pause...
+    setTimeout(() => {
+      revealInfinity();
+    }, 3000);
+  }, 800);
 }

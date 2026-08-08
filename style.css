@@ -617,127 +617,260 @@ ANIMATIONS
 .crazy-reel-screen.active {
   animation: reelFade 0.6s ease;
 }
-.overload{
-
-animation:
-screenShake .15s infinite,
-overloadGlow 1s infinite;
-
+.overload {
+  animation:
+    screenShake 0.15s infinite,
+    overloadGlow 1s infinite;
 }
 
+@keyframes screenShake {
+  0% {
+    transform: translate(0);
+  }
 
-@keyframes screenShake{
+  25% {
+    transform: translate(-8px, 5px);
+  }
 
-0%{
-transform:translate(0);
+  50% {
+    transform: translate(8px, -5px);
+  }
+
+  75% {
+    transform: translate(-5px, 3px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
 }
 
-25%{
-transform:translate(-8px,5px);
+@keyframes overloadGlow {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: brightness(1);
+    text-shadow:
+      0 0 10px #fff,
+      0 0 25px #ff9ecb,
+      0 0 45px #ff9ecb;
+  }
+
+  35% {
+    transform: scale(1.15);
+    opacity: 1;
+    filter: brightness(2);
+    text-shadow:
+      0 0 25px #fff,
+      0 0 60px #fff,
+      0 0 120px #ffb6d9;
+  }
+
+  65% {
+    transform: scale(1.45);
+    opacity: 0.9;
+    filter: brightness(5);
+    text-shadow:
+      0 0 60px #fff,
+      0 0 140px #fff,
+      0 0 260px #fff;
+  }
+
+  85% {
+    transform: scale(2.2);
+    opacity: 0.5;
+    filter: brightness(12) blur(6px);
+    text-shadow:
+      0 0 120px #fff,
+      0 0 280px #fff,
+      0 0 500px #fff;
+  }
+
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+    filter: brightness(20) blur(25px);
+    text-shadow:
+      0 0 250px #fff,
+      0 0 500px #fff,
+      0 0 900px #fff;
+  }
 }
 
-50%{
-transform:translate(8px,-5px);
+.infinity-reveal .center {
+  font-size: 180px;
+
+  animation: infinityPop 1s ease forwards;
 }
 
-75%{
-transform:translate(-5px,3px);
+@keyframes infinityPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-100%{
-transform:translate(0);
+.confetti {
+  position: fixed;
+
+  top: -20px;
+
+  width: 12px;
+
+  height: 12px;
+
+  background: hotpink;
+
+  animation: fall 4s linear forwards;
+
+  z-index: 99999;
 }
 
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}
+@keyframes maxReading {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.12);
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+
+  75% {
+    transform: scale(1.08);
+  }
 }
 
+.max-reading {
+  animation: maxReading 0.25s ease-in-out infinite;
+}
+@keyframes overloadGlow {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+    text-shadow: 0 0 0px white;
+    opacity: 1;
+  }
 
+  30% {
+    transform: scale(1.1);
+    filter: brightness(1.5);
+    text-shadow: 0 0 20px white;
+  }
 
-@keyframes overloadGlow{
+  60% {
+    transform: scale(1.3);
+    filter: brightness(2.5);
+    text-shadow: 0 0 50px white;
+  }
 
-0%{
-box-shadow:
-0 0 20px red;
+  100% {
+    transform: scale(1.8);
+    filter: brightness(8);
+    text-shadow: 0 0 120px white;
+    opacity: 0;
+  }
 }
 
+.overload-glow {
+  animation: overloadGlow 2.2s cubic-bezier(0.22, 0.8, 0.2, 1) forwards;
+}
+@keyframes whiteOut {
+  0% {
+    background: rgba(255, 255, 255, 0);
+  }
 
-50%{
-box-shadow:
-0 0 80px hotpink;
+  100% {
+    background: rgba(255, 255, 255, 1);
+  }
 }
 
-
-100%{
-box-shadow:
-0 0 20px red;
+.white-out {
+  animation: whiteOut 0.7s ease forwards;
+}
+#transitionFlash {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.8s ease;
 }
 
+#transitionFlash.white-out {
+  opacity: 1;
+}
+@keyframes infinityAppear {
+  0% {
+    opacity: 0;
+    transform: perspective(800px) rotateX(8deg) scale(0.3);
+    filter: blur(12px);
+  }
+
+  60% {
+    transform: perspective(800px) rotateX(8deg) scale(1.15);
+  }
+
+  100% {
+    opacity: 1;
+    transform: perspective(800px) rotateX(8deg) scale(1);
+    filter: blur(0);
+  }
+}
+.infinity-final {
+  animation: infinityFinal 0.55s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
 }
 
+@keyframes infinityFinal {
+  0% {
+    opacity: 0;
+    transform: perspective(900px) rotateX(20deg) scale(0.35);
+    filter: blur(14px);
+  }
 
+  60% {
+    opacity: 1;
+    transform: perspective(900px) rotateX(0deg) scale(1.15);
+    filter: blur(0);
+  }
 
-.infinity-reveal .center{
-
-font-size:180px;
-
-animation:
-infinityPop 1s ease forwards;
-
+  100% {
+    opacity: 1;
+    transform: perspective(900px) rotateX(0deg) scale(1);
+    filter: blur(0);
+  }
 }
+.final-infinity {
+  color: #ff4f8b;
 
+  font-size: 11rem;
 
+  font-weight: 900;
 
-@keyframes infinityPop{
+  text-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 25px rgba(255, 105, 180, 0.7),
+    0 0 60px rgba(255, 105, 180, 0.5),
+    0 15px 25px rgba(0, 0, 0, 0.25);
 
-0%{
-transform:scale(0);
-opacity:0;
-}
-
-
-70%{
-transform:scale(1.3);
-}
-
-
-100%{
-transform:scale(1);
-opacity:1;
-}
-
-}
-
-
-
-.confetti{
-
-position:fixed;
-
-top:-20px;
-
-width:12px;
-
-height:12px;
-
-background:
-hotpink;
-
-animation:
-fall 4s linear forwards;
-
-z-index:99999;
-
-}
-
-
-
-@keyframes fall{
-
-to{
-
-transform:
-translateY(110vh)
-rotate(720deg);
-
-}
-
+  animation: infinityFinal 0.6s ease forwards;
 }
