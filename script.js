@@ -771,3 +771,40 @@ function startInfinityTransition() {
     }, 150);
   }, 650);
 }
+/* =========================
+   RECORDING SETUP
+========================= */
+
+const recordingSetup = document.getElementById("recordingSetup");
+const startRecordingSetup = document.getElementById("startRecordingSetup");
+const permissionStatus = document.getElementById("permissionStatus");
+
+let cameraStream = null;
+
+startRecordingSetup.addEventListener("click", async () => {
+  try {
+    permissionStatus.innerText = "Requesting camera and microphone... 🎥";
+
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: "user",
+      },
+      audio: true,
+    });
+
+    permissionStatus.innerText = "Camera and microphone ready! ❤️";
+
+    console.log("Camera stream:", cameraStream);
+
+    // For now, just hide the setup screen.
+    // Recording will be added in the next step.
+    setTimeout(() => {
+      recordingSetup.style.display = "none";
+    }, 800);
+  } catch (error) {
+    console.error(error);
+
+    permissionStatus.innerText =
+      "Camera or microphone permission was denied. 😭";
+  }
+});
