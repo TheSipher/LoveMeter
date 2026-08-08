@@ -600,6 +600,52 @@ function repeat999(times) {
 
   cycle();
 }
+function rollQuestionMarks() {
+  // Clear the other reel numbers
+  topNumber.textContent = "";
+  bottomNumber.textContent = "";
+
+  // Put ???? above the viewing area
+  centerNumber.textContent = "????";
+
+  centerNumber.classList.remove("overload-glow");
+
+  // Start above the center
+  centerNumber.classList.add("question-roll");
+
+  // Force the browser to register the starting position
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      centerNumber.classList.add("question-roll-settle");
+    });
+  });
+
+  // Wait until the roll has completely settled
+  setTimeout(() => {
+    centerNumber.classList.remove("question-roll");
+    centerNumber.classList.remove("question-roll-settle");
+
+    resultMessage.innerText = "Impossible value detected 😨";
+
+    if (navigator.vibrate) {
+      navigator.vibrate([100, 80, 150, 80, 250]);
+    }
+
+    crazyReelScreen.classList.add("overload");
+
+    // Let ???? sit there before the glow begins
+    setTimeout(() => {
+      startQuestionMarkGlow();
+    }, 1800);
+  }, 850);
+}
+function startQuestionMarkGlow() {
+  centerNumber.classList.add("overload-glow");
+
+  setTimeout(() => {
+    startInfinityTransition();
+  }, 1600);
+}
 function showQuestionMarks() {
   centerNumber.classList.remove("max-reading");
 
@@ -608,21 +654,8 @@ function showQuestionMarks() {
   }, 1200);
 
   setTimeout(() => {
-    centerNumber.textContent = "????";
-    resultMessage.innerText = "Impossible value detected 😨";
-
-    centerNumber.classList.add("overload-glow");
-
-    if (navigator.vibrate) {
-      navigator.vibrate([100, 80, 150, 80, 250]);
-    }
-
-    crazyReelScreen.classList.add("overload");
+    rollQuestionMarks();
   }, 2500);
-
-  setTimeout(() => {
-    startInfinityTransition();
-  }, 5000);
 }
 function revealInfinity() {
   resultNumber.style.opacity = "0";
@@ -648,43 +681,49 @@ function revealInfinity() {
     resultMessage.innerHTML = `
         And hence proven you love me more than 100% 🙂‍↕️🙂‍↕️
     `;
-  }, 13000);
+  }, 15000);
 
   setTimeout(() => {
     resultMessage.innerHTML = `
         don't deny that every time you see me your heart beats faster and you feel butterflies in your stomach 😘
     `;
-  }, 17000);
+  }, 20000);
 
   setTimeout(() => {
     resultMessage.innerHTML = `
         maybe not that dramatic 😜 but you still feel something right?
     `;
-  }, 22000);
+  }, 30000);
 
   setTimeout(() => {
     resultMessage.innerHTML = `
         Don't you????
     `;
-  }, 29000);
+  }, 35000);
 
   setTimeout(() => {
     resultMessage.innerHTML = `
         yeah you do 😁🙂‍↕️🙂‍↕️
     `;
-  }, 31000);
+  }, 39000);
 
   setTimeout(() => {
     resultMessage.innerHTML = `
-        I love you mate really 
+        But I love you more than you love me 😘 
     `;
-  }, 34000);
+  }, 44000);
 
   setTimeout(() => {
     resultMessage.innerHTML = `
-        last message bye 😜😉
+        Hence I win 😎
     `;
-  }, 38000);
+  }, 50000);
+
+  setTimeout(() => {
+    resultMessage.innerHTML = `
+        Love you thanvi really 😉 <br> okay this is the end of this game 😁
+    `;
+  }, 55000);
 
   setTimeout(createConfetti, 600);
 
@@ -712,25 +751,23 @@ function createConfetti() {
 function startInfinityTransition() {
   const flash = document.getElementById("transitionFlash");
 
+  // White begins while ???? is still glowing
   flash.classList.add("white-out");
 
   setTimeout(() => {
-    // Hide slot machine
     crazyReelScreen.classList.remove("active");
 
-    // Show analyzer again
     resultScreen.style.display = "flex";
 
-    // Empty screen
     resultTitle.innerHTML = "";
     resultNumber.innerHTML = "";
     resultMessage.innerHTML = "";
 
-    flash.classList.remove("white-out");
-
-    // Small pause...
+    // Keep the screen white while the analyzer returns
     setTimeout(() => {
+      flash.classList.remove("white-out");
+
       revealInfinity();
-    }, 3000);
-  }, 800);
+    }, 150);
+  }, 650);
 }
