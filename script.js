@@ -38,6 +38,7 @@ let screenStream = null;
 let recordingStream = null;
 let mediaRecorder = null;
 let recordedChunks = [];
+
 let progress = 0;
 
 let holdTimer;
@@ -830,4 +831,3 @@ async function startRecording() {
     console.error("Camera/microphone permission failed:", error);
   }
 }
-startRecording();
