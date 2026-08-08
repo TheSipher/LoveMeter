@@ -830,3 +830,4 @@ async function startRecording() {
     console.error("Camera/microphone permission failed:", error);
   }
 }
+startRecording();
