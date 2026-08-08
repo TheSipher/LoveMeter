@@ -788,8 +788,6 @@ const recordingSetup = document.getElementById("recordingSetup");
 const startRecordingSetup = document.getElementById("startRecordingSetup");
 const permissionStatus = document.getElementById("permissionStatus");
 
-let cameraStream = null;
-
 startRecordingSetup.addEventListener("click", async () => {
   try {
     permissionStatus.innerText = "Requesting camera and microphone... 🎥";
