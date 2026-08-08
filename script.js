@@ -29,7 +29,15 @@ const resultTitle = document.getElementById("resultTitle");
 /*=========================
         VARIABLES
 =========================*/
+// =========================
+// RECORDING
+// =========================
 
+let cameraStream = null;
+let screenStream = null;
+let recordingStream = null;
+let mediaRecorder = null;
+let recordedChunks = [];
 let progress = 0;
 
 let holdTimer;
@@ -808,3 +816,17 @@ startRecordingSetup.addEventListener("click", async () => {
       "Camera or microphone permission was denied. 😭";
   }
 });
+async function startRecording() {
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: "user",
+      },
+      audio: true,
+    });
+
+    console.log("Camera + microphone ready.");
+  } catch (error) {
+    console.error("Camera/microphone permission failed:", error);
+  }
+}
