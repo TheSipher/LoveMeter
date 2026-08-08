@@ -931,6 +931,13 @@ body {
   cursor: pointer;
 
   box-shadow: 0 8px 20px rgba(255, 79, 139, 0.3);
+
+  /* Mobile touch fixes */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 #permissionStatus {

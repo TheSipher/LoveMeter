@@ -841,3 +841,30 @@ async function startRecording() {
     console.error("Recording failed:", error);
   }
 }
+function stopRecording() {
+  if (!mediaRecorder || mediaRecorder.state === "inactive") {
+    return;
+  }
+
+  mediaRecorder.stop();
+
+  mediaRecorder.onstop = () => {
+    const recordedBlob = new Blob(recordedChunks, {
+      type: "video/webm",
+    });
+
+    const recordingURL = URL.createObjectURL(recordedBlob);
+
+    console.log("🎥 Recording finished:", recordingURL);
+
+    // Stop camera and microphone
+    if (cameraStream) {
+      cameraStream.getTracks().forEach((track) => track.stop());
+    }
+
+    cameraStream = null;
+  };
+}
+setTimeout(() => {
+  stopRecording();
+}, 15000);
